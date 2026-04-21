@@ -1,5 +1,9 @@
+mod planet;
+
 use bevy::prelude::*;
 use std::f32::consts::PI;
+
+use crate::planet::Planet;
 
 fn main() {
     App::new()
@@ -7,13 +11,6 @@ fn main() {
         .add_systems(Startup, setup)
         .add_systems(Update, orbit_system)
         .run();
-}
-
-#[derive(Component)]
-struct Planet {
-    radius: f32,
-    speed: f32,
-    angle: f32,
 }
 
 fn setup(
@@ -42,7 +39,6 @@ fn setup(
         Transform::default(),
     ));
 
-    // TODO: refactor into separate Planet struct with gravitational formulae
     let planet_data: [(f32, f32, f32); 4] = [
         (3.0, 1.0, 0.3),
         (5.0, 0.7, 0.5),
