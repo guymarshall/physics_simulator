@@ -39,23 +39,19 @@ fn setup(
         Transform::default(),
     ));
 
-    let planet_data: [(f32, f32, f32); 4] = [
-        (3.0, 1.0, 0.3),
-        (5.0, 0.7, 0.5),
-        (7.0, 0.5, 0.7),
-        (9.0, 0.3, 0.9),
+    let planet_data: [Planet; 4] = [
+        Planet::new(3.0, 1.0, 0.3, 0.0),
+        Planet::new(5.0, 0.7, 0.5, 0.0),
+        Planet::new(7.0, 0.5, 0.7, 0.0),
+        Planet::new(9.0, 0.3, 0.9, 0.0),
     ];
 
-    for (radius, speed, size) in planet_data {
+    for planet in planet_data {
         commands.spawn((
-            Mesh3d(meshes.add(Sphere::new(size))),
-            MeshMaterial3d(materials.add(Color::srgb(0.2 + size, 0.4, 1.0 - size))),
-            Transform::from_xyz(radius, 0.0, 0.0),
-            Planet {
-                radius,
-                speed,
-                angle: 0.0,
-            },
+            Mesh3d(meshes.add(Sphere::new(planet.size))),
+            MeshMaterial3d(materials.add(Color::srgb(0.2 + planet.size, 0.4, 1.0 - planet.size))),
+            Transform::from_xyz(planet.radius, 0.0, 0.0),
+            planet,
         ));
     }
 }
