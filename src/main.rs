@@ -5,6 +5,10 @@ use std::f32::consts::PI;
 
 use crate::planet::Planet;
 
+fn scale_radius(radius: f32) -> f32 {
+    1.5 / 695_700.0 * radius
+}
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
@@ -34,16 +38,20 @@ fn setup(
     ));
 
     commands.spawn((
-        Mesh3d(meshes.add(Sphere::new(1.5))),
+        Mesh3d(meshes.add(Sphere::new(scale_radius(695_700.0)))),
         MeshMaterial3d(materials.add(Color::srgb(1.0, 0.8, 0.2))),
         Transform::default(),
     ));
 
-    let planet_data: [Planet; 4] = [
-        Planet::new(3.0, 1.0, 0.3, 0.0),
-        Planet::new(5.0, 0.7, 0.5, 0.0),
-        Planet::new(7.0, 0.5, 0.7, 0.0),
-        Planet::new(9.0, 0.3, 0.9, 0.0),
+    let planet_data: [Planet; 8] = [
+        Planet::new(3.0, 1.0, scale_radius(2_440.0), 0.0), // Mercury
+        Planet::new(5.0, 0.7, scale_radius(6_052.0), 0.0), // Venus
+        Planet::new(7.0, 0.5, scale_radius(6_371.0), 0.0), // Earth
+        Planet::new(9.0, 0.3, scale_radius(3_390.0), 0.0), // Mars
+        Planet::new(11.0, 0.2, scale_radius(69_911.0), 0.0), // Jupiter
+        Planet::new(13.0, 0.18, scale_radius(58_232.0), 0.0), // Saturn
+        Planet::new(15.0, 0.11, scale_radius(25_362.0), 0.0), // Uranus
+        Planet::new(17.0, 0.09, scale_radius(24_622.0), 0.0), // Neptune
     ];
 
     for planet in planet_data {
